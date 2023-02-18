@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image,'C:/Users/Administrator/Desktop/IMG_0108.png')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>dev_close_window ()</l>
+<l>dev_open_window_fit_size (0, 0, Width, Width, -1, -1, WindowHandle)</l>
+<l>dev_display (Image)</l>
+<c></c>
+<c>*get the height wave model</c>
+<l>gen_highpass (ImageHighpass, 0.1, 'none', 'dc_center', Width, Height)</l>
+<c></c>
+<c>*do the fft to the photo</c>
+<l>fft_generic(Image, ImageFFT, 'to_freq', -1, 'sqrt', 'dc_center', 'complex')</l>
+<c></c>
+<c>*do the height wave filte to the photo</c>
+<l>convol_fft (ImageFFT, ImageFFT, ImageConvol)</l>
+<c></c>
+<c>*do the fft to the photo</c>
+<l>fft_generic (ImageConvol, ImageFFT1, 'from_freq', 1, 'sqrt', 'dc_center', 'byte')</l>
+<l>dump_window (WindowHandle, 'bmp', 'E:/photo/halcon/highpass.bmp')</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
