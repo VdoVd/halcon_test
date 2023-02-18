@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_close_window ()</l>
+<c></c>
+<c>*read image</c>
+<l>read_image(Image,'C:/Users/Administrator/Desktop/IMG_0109.png')</l>
+<c></c>
+<c>*get image size</c>
+<l>get_image_size (Image, Width, Height)</l>
+<c></c>
+<c>*open the size of window</c>
+<l>dev_open_window (0, 0, Width, Height, 'black', WindowHandle)</l>
+<c></c>
+<c>*gray photo</c>
+<l>rgb1_to_gray (Image, GrayImage)</l>
+<c></c>
+<c>*threshold</c>
+<l>threshold (GrayImage, Region, 0, 67)</l>
+<c></c>
+<c>*region</c>
+<l>connection (Region, ConnectedRegions)</l>
+<c></c>
+<c>*shape</c>
+<l>select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 4380.1, 10000)</l>
+<c></c>
+<c>*count thr num of region</c>
+<l>count_obj (SelectedRegions, Number)</l>
+<c></c>
+<c>*the smallest rectangle</c>
+<l>smallest_rectangle2(SelectedRegions, Row, Column, Phi, Length1, Length2)</l>
+<c></c>
+<c>*set the color of pencal</c>
+<l>dev_set_color ('green')</l>
+<c></c>
+<c>*set the style of draw</c>
+<l>dev_set_draw ('margin')</l>
+<c></c>
+<c>*set the width of line</c>
+<l>dev_set_line_width (3)</l>
+<c></c>
+<c>*set the size of font</c>
+<l>set_display_font (WindowHandle, 24, 'mono', 'true', 'false')</l>
+<c></c>
+<c>*show origin photo</c>
+<l>dev_display (Image)</l>
+<c></c>
+<c>*generate the rectangle</c>
+<l>gen_rectangle2 (Rectangle, Row, Column, Phi, Length1, Length2)</l>
+<c></c>
+<c>*get the angle of all rotation</c>
+<l>orientation_region (Rectangle, Phi1)</l>
+<c></c>
+<c>*get the center of all regions</c>
+<l>area_center (Rectangle, Area, Row1, Column1)</l>
+<c></c>
+<c>*set the color of pencal</c>
+<l>dev_set_color('red')</l>
+<c></c>
+<c>*draw the direction of narrow </c>
+<l>disp_arrow (WindowHandle, Row1, Column1, Row1+Length1*cos(Phi1+1.5708),Column1+Length1*sin(Phi1+1.5708),1)</l>
+<c></c>
+<c>*set the color of pen</c>
+<l>dev_set_color ('blue')</l>
+<c></c>
+<c>*have a circle of mesion</c>
+<l>set_tposition (WindowHandle, 10,10)</l>
+<l>write_string (WindowHandle, 'the result is as following:')</l>
+<c></c>
+<c>*set the size of font</c>
+<l>set_display_font (WindowHandle, 16, 'mono', 'true', 'false')</l>
+<l>for i:= 0 to Number-1 by 1</l>
+<l>    set_tposition (WindowHandle, Row1[i], Column1[i])</l>
+<l>    write_string (WindowHandle, 'the'+(i+1))</l>
+<l>endfor</l>
+<c></c>
+<c>*save the result of window </c>
+<l>dump_window (WindowHandle, 'png', 'E:/photo/halcon/location.png')</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
